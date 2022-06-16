@@ -21,6 +21,7 @@ def display_card(rank: str, suit: str) -> None:
 
 
 def main():
+    clear_terminal()
     config = configparser.ConfigParser()
     config.read("config.ini")
 
@@ -42,12 +43,12 @@ def main():
             card = random.choice(card_ranks)
         count += card_values[card]
         display_card(card, random.choice(card_suits))
-        time.sleep(int(config["game"]["seconds_between_cards"]))
+        time.sleep(float(config["game"]["seconds_between_cards"]))
         clear_terminal()
 
     while True:
         try:
-            guess = int(input("Enter count: "))
+            guess = float(input("Enter count: "))
             break
         except ValueError:
             print("Please enter a valid value!")

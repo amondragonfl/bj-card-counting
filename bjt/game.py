@@ -16,6 +16,9 @@ def display_card(rank: str, suit: str) -> None:
 
 
 def main():
+    config = configparser.ConfigParser()
+    config.read("config.ini")
+
     card_ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
     card_values = dict()
     card_values.update(dict.fromkeys(['2', '3', '4', '5', '6'], 1))

@@ -34,15 +34,20 @@ def main():
     card_values.update(dict.fromkeys(['10', 'A', 'K', 'Q', 'J'], -1))
 
     count = 0
-    card = None
+    card_rank = None
+    log = []
 
     for i in range(int(config["game"]["card_amount"])):
-        old = card
-        card = random.choice(card_ranks)
-        while card == old:
-            card = random.choice(card_ranks)
-        count += card_values[card]
-        display_card(card, random.choice(card_suits))
+        old = card_rank
+        card_rank = random.choice(card_ranks)
+        while card_rank == old:
+            card_rank = random.choice(card_ranks)
+        card_suit = random.choice(card_suits)
+        card_value = card_values[card_rank]
+
+        log.append((card_rank, card_suit, card_value))
+        count += card_value
+        display_card(card_rank, card_suit)
         time.sleep(float(config["game"]["seconds_between_cards"]))
         clear_terminal()
 
@@ -57,6 +62,16 @@ def main():
         print("That is correct!!!")
     else:
         print(f"Wrong answer, actual count was {count}")
+
+    show_log = input("Do you wish to analyze the log (y/n): ").lower()
+    if show_log == "y":
+        log_count = 0
+        for card in log:
+            display_card(card[0], card[1])
+            print(f"Card value: {card[2]}")
+            log_count += card[2]
+            print(f"Current count: {log_count}")
+        print(f"Final count {log_count}")
 
 
 if __name__ == '__main__':
